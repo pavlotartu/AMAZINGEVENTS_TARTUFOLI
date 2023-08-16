@@ -4,29 +4,25 @@
     box-sizing : border-box;
 }
 
+.navstatic {
+    position: sticky;
+}
+
 .navbar-nav {
     margin-left: auto;
     margin-right: 0;
 }
 
-.custom-img {
-    min-width: 100vw; 
-    max-height: 20vw; 
-    margin: 0vw; 
-    object-fit:unset;
+.nav-item.active a.nav-link {
+    color: rgb(70, 166, 230);
+    font-weight: bold;
 }
 
-.home01 {
-    position: absolute;
-    font-size: 2vw;
-    top: 6.5vw; 
-    left: 44vw; 
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    padding: 0.5vw 1vw;
-    border-radius: 1vw;
-    text-decoration: none;
-    z-index: 1;
+.custom-img {
+    min-width: 100vw; 
+    max-height: 25vw; 
+    margin: 0vw; 
+    object-fit:cover;
 }
 
 .home01:hover {
@@ -36,6 +32,7 @@
 footer .container {
     display: flex; 
     justify-content: flex-start;
+    height: 3vw;
 }
 
 footer img {
@@ -63,3 +60,20 @@ fieldset span {
     display: inline-block;
 }
 
+main .container {
+    margin-bottom: 2vw;
+}
+
+.col-md-4 {
+    display: flex;
+    align-items: center;
+    object-fit:cover;
+}
+
+.row {
+    padding: 0vw 0vw 0vw 1vw;
+}
+
+.card-body p {
+    margin: 1vw;
+}
