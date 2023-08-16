@@ -1,12 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upcoming</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./assets/img/faviconICO.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
 </head>
 
-<body>a
-    
+<body>
+    <body>
+        <header>
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+              <a class="navbar-brand" href="#">
+                <img src="./assets/img/amazing_brand.png" alt="Logo de Mi Sitio" width="120">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="./index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#./upcoming_events.html">Upcoming Event</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./past-events.html">Past Events</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./stats.html">Stats</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+      
+          <div class="carousel-container">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <a class="home01" href="./index.html">Home</a>
+                  <img src="./assets/img/optional_banner_1.jpg" class="img-fluid d-block mx-auto custom-img alt=" img01">
+                </div>
+                <div class="carousel-item">
+                  <a class="home01" href="./upcoming_events.html">Upcoming Event</a>
+                  <img src="./assets/img/optional_banner_2.jpg" class="img-fluid d-block mx-auto custom-img alt=" img02">
+                </div>
+                <div class="carousel-item">
+                  <a class="home01" href="./past-events.html">Past Events</a>
+                  <img src="./assets/img/optional_banner_3.jpg" class="img-fluid d-block mx-auto custom-img alt=" img03">
+                </div>
+                <div class="carousel-item">
+                  <a class="home01" href="./contact.html">Contact</a>
+                  <img src="./assets/img/optional_banner_4.jpg" class="img-fluid d-block mx-auto custom-img alt=" img04">
+                </div>
+                <div class="carousel-item">
+                  <a class="home01" href="./stats.html">Stats</a>
+                  <img src="./assets/img/optional_banner_5.jpg" class="img-fluid d-block mx-auto custom-img alt=" img05">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </header>
+      
+        <main>
+          <div class="table-nav">
+            <table>
+              <div class="form01">
+                <fieldset>
+                  <legend></legend>
+                  <label>
+                    <input type="radio" name="category" value="category" />
+                    <span>Category</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="category" value="category" />
+                    <span>Category</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="category" value="category" />
+                    <span>Category</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="category" value="category" />
+                    <span>Category</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="category" value="category" />
+                    <span>Category</span>
+                  </label>
+                </fieldset>
+              </div>
+            </table>
+      
+      
+            <nav class="navbar bg-body-tertiary">
+              <div class="container-fluid">
+                <form class="d-flex ms-auto" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </nav>
+      
+          </div>
+      
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/food_fair.jpg" class="card-img-top" alt="Festival of the collectivities">
+                  <div class="card-body">
+                    <h5 class="card-title">Festival of the Collectivities</h5>
+                    <p class="card-text">Enjoy your favorite dishes from different countries in a unique event for the whole
+                      family.</p>
+                    <p class="card-text">Fecha: 2022-12-12</p>
+                    <p class="card-text">Categoría: Food Fair</p>
+                    <p class="card-text">Lugar: Room A</p>
+                    <p class="card-text">Capacidad: 45000</p>
+                    <p class="card-text">Asistencia: 42756</p>
+                    <p class="card-text">Precio: $5</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/outing_to_the_museum.jpg" class="card-img-top" alt="Art Exhibition">
+                  <div class="card-body">
+                    <h5 class="card-title">Art Exhibition</h5>
+                    <p class="card-text">Let's go to the art museum for an incredible tour to learn about the largest
+                      dinosaurs.</p>
+                    <p class="card-text">Fecha: 2022-11-02</p>
+                    <p class="card-text">Categoría: Museum</p>
+                    <p class="card-text">Lugar: Field</p>
+                    <p class="card-text">Capacidad: 82000</p>
+                    <p class="card-text">Asistencia: 65892</p>
+                    <p class="card-text">Precio: $15</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/costume_party.jpg" class="card-img-top" alt="Halloween Night">
+                  <div class="card-body">
+                    <h5 class="card-title">Halloween Night</h5>
+                    <p class="card-text">Come in your scariest costume character to win amazing prizes.</p>
+                    <p class="card-text">Fecha: 2024-02-12</p>
+                    <p class="card-text">Categoría: Costume Party</p>
+                    <p class="card-text">Lugar: Room C</p>
+                    <p class="card-text">Capacidad: 12000</p>
+                    <p class="card-text">Estimado de asistencia: 9000</p>
+                    <p class="card-text">Precio: $12</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/music_concert.jpg" class="card-img-top" alt="Metallica in concert">
+                  <div class="card-body">
+                    <h5 class="card-title">Metallica in Concert</h5>
+                    <p class="card-text">The only concert of the most emblematic band in the world.</p>
+                    <p class="card-text">Fecha: 2024-01-22</p>
+                    <p class="card-text">Categoría: Music Concert</p>
+                    <p class="card-text">Lugar: Room A</p>
+                    <p class="card-text">Capacidad: 138000</p>
+                    <p class="card-text">Estimado de asistencia: 138000</p>
+                    <p class="card-text">Precio: $150</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/marathon.jpg" class="card-img-top" alt="10K for life">
+                  <div class="card-body">
+                    <h5 class="card-title">10K for Life</h5>
+                    <p class="card-text">Come and exercise, improve your health and lifestyle.</p>
+                    <p class="card-text">Fecha: 2022-03-01</p>
+                    <p class="card-text">Categoría: Race</p>
+                    <p class="card-text">Lugar: Soccer Field</p>
+                    <p class="card-text">Capacidad: 30000</p>
+                    <p class="card-text">Asistencia: 25698</p>
+                    <p class="card-text">Precio: $3</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/books.jpg" class="card-img-top" alt="School Book Fair">
+                  <div class="card-body">
+                    <h5 class="card-title">School Book Fair</h5>
+                    <p class="card-text">Bring your unused school book and bring the one you need.</p>
+                    <p class="card-text">Fecha: 2022-10-15</p>
+                    <p class="card-text">Categoría: Book Exchange</p>
+                    <p class="card-text">Lugar: Room D1</p>
+                    <p class="card-text">Capacidad: 150000</p>
+                    <p class="card-text">Asistencia: 123286</p>
+                    <p class="card-text">Precio: $1</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-md-3 mb-4">
+                <div class="card">
+                  <img src="./assets/img/cinema.jpg" class="card-img-top" alt="Avengers">
+                  <div class="card-body">
+                    <h5 class="card-title">Avengers</h5>
+                    <p class="card-text">Marvel's Avengers 3D premiere, the start of an epic saga with your best superheroes.
+                    </p>
+                    <p class="card-text">Fecha: 2023-10-15</p>
+                    <p class="card-text">Categoría: Let's go to the cinema</p>
+                    <p class="card-text">Lugar: Room D1</p>
+                    <p class="card-text">Capacidad: 9000</p>
+                    <p class="card-text">Estimado de asistencia: 9000</p>
+                    <p class="card-text">Precio: $250</p>
+                    <a href="#" class="btn btn-primary">Ver detalles</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      
+        <footer class="bg-dark text-white text-center py-4">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="#">
+                  <img src="./assets/img/facebook.png" alt="Facebook" class="btn btn-outline-light rounded-circle p-2">
+                </a>
+              </div>
+              <div class="col">
+                <a href="#">
+                  <img src="./assets/img/instagram.png" alt="Instagram" class="btn btn-outline-light rounded-circle p-2">
+                </a>
+              </div>
+              <div class="col">
+                <a href="#">
+                  <img src="./assets/img/whatsapp.png" alt="whatsapp" class="btn btn-outline-light rounded-circle p-2">
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+          crossorigin="anonymous"></script>
+      </body>
+
+
 </body>
 </html>
