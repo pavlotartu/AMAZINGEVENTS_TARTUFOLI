@@ -77,3 +77,13 @@ main .container {
 .card-body p {
     margin: 1vw;
 }
+
+.table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table th .table td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
