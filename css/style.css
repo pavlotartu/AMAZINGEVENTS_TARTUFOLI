@@ -46,7 +46,7 @@ footer img {
     justify-content: space-between;
     flex-wrap: wrap;
     align-content: stretch;
-    margin: 1vw 8vw 1vw 8.5vw;
+    margin: 1vw 8vw 1vw 10vw;
 }
 
 fieldset {
@@ -59,6 +59,7 @@ fieldset span {
     padding: 1vw;
     display: inline-block;
 }
+
 
 main .container {
     margin-bottom: 2vw;
