@@ -5,7 +5,7 @@ function tarjetas(event) {
   let { image, name, description, date, price } = event;
 
   let cardCol = document.createElement('div');
-  cardCol.className = 'col-md-6 col-lg-3 mb-4';
+  cardCol.className = 'col-12 col-md-6 col-lg-3 mb-4';
   cardCol.innerHTML = `
   <div class="card h-100">
   <img src="${image}" class="card-img-top" alt="${image}">
