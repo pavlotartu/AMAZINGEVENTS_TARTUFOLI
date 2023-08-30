@@ -5,7 +5,6 @@ data.events.forEach(event => {
 });
 
 const sortedCategories = Array.from(categoriesSet).sort();
-
 const categoryRow = document.getElementById("categoryRow");
 
 sortedCategories.forEach(category => {
@@ -26,7 +25,6 @@ sortedCategories.forEach(category => {
 
   categoryRow.appendChild(th);
 });
-
 
 const eventsContainer = document.querySelector('#events-container');
 
@@ -72,19 +70,17 @@ searchInput.addEventListener("input", () => {
   filterAndShowCards(selectedCategories, searchTerm);
 });
 
-
-function filterAndShowCards(categories, searchTerm) {
+function filterAndShowCards(selectedCategories, searchTerm) {
   eventsContainer.innerHTML = '';
 
-  data.events.filter(event => categories.includes(event.category) || categories.length === 0)
-    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    event.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  data.events
+    .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
+    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .forEach(event => {
       let eventCard = tarjetas(event);
       eventsContainer.appendChild(eventCard);
     });
 }
-
 function showAllCards() {
   eventsContainer.innerHTML = '';
   categoryCheckboxes.forEach(checkbox => {

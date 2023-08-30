@@ -13,7 +13,7 @@ sortedCategories.forEach(category => {
   const input = document.createElement("input");
   const span = document.createElement("span");
 
-  input.type = "checkbox"; // Cambiar de "radio" a "checkbox"
+  input.type = "checkbox";
   input.name = "category";
   input.value = category;
 
@@ -25,7 +25,6 @@ sortedCategories.forEach(category => {
 
   categoryRow.appendChild(th);
 });
-
 
 const currentDate = new Date("2023-01-01"); 
 const eventsContainer = document.querySelector('#events-container');
@@ -76,9 +75,10 @@ searchInput.addEventListener("input", () => {
 
 function filterAndShowCards(categories, searchTerm) {
   eventsContainer.innerHTML = '';
-  futureEvents.filter(event => categories.includes(event.category) || categories.length === 0)
-    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  
+  futureEvents
+    .filter(event => categories.includes(event.category) || categories.length === 0)
+    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .forEach(event => {
       let eventCard = tarjetas(event);
       eventsContainer.appendChild(eventCard);
