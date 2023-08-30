@@ -1,15 +1,11 @@
 const categoriesSet = new Set();
 
-
 data.events.forEach(event => {
   categoriesSet.add(event.category);
 });
 
-
 const sortedCategories = Array.from(categoriesSet).sort();
-
 const categoryRow = document.getElementById("categoryRow");
-
 
 const allOption = document.createElement("th");
 const allLabel = document.createElement("label");
@@ -69,7 +65,6 @@ function tarjetas(event) {
     </div>
   </div>
 </div> `;
-  
   return cardCol;
 }
 
@@ -81,7 +76,6 @@ for (const event of data.events) {
   }
 }
 
-
 const categoryCheckboxes = document.querySelectorAll('input[type="radio"][name="category"]');
 
 categoryCheckboxes.forEach(checkbox => {
@@ -92,19 +86,14 @@ categoryCheckboxes.forEach(checkbox => {
   });
 });
 
-
 searchInput.addEventListener("input", () => {
   const selectedCategory = document.querySelector('input[type="radio"][name="category"]:checked').value;
   const searchTerm = searchInput.value;
   filterAndShowCards(selectedCategory, searchTerm);
 });
 
-
 function filterAndShowCards(category, searchTerm) {
-
   eventsContainer.innerHTML = '';
-
-
   data.events.filter(event => new Date(event.date) > currentDate && (event.category === category || category === ""))
     .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -114,10 +103,8 @@ function filterAndShowCards(category, searchTerm) {
     });
 }
 
-
 function showAllCards() {
   eventsContainer.innerHTML = '';
-
   for (const event of data.events) {
     let eventDate = new Date(event.date);
     if (eventDate > currentDate) { 
