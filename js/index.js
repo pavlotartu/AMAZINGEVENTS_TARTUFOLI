@@ -8,31 +8,13 @@ const sortedCategories = Array.from(categoriesSet).sort();
 
 const categoryRow = document.getElementById("categoryRow");
 
-const allOption = document.createElement("th");
-const allLabel = document.createElement("label");
-const allInput = document.createElement("input");
-const allSpan = document.createElement("span");
-
-allInput.type = "radio";
-allInput.name = "category";
-allInput.value = ""; 
-allInput.checked = true;
-
-allSpan.textContent = "Todas";
-
-allLabel.appendChild(allInput);
-allLabel.appendChild(allSpan);
-allOption.appendChild(allLabel);
-
-categoryRow.appendChild(allOption);
-
 sortedCategories.forEach(category => {
   const th = document.createElement("th");
   const label = document.createElement("label");
   const input = document.createElement("input");
   const span = document.createElement("span");
 
-  input.type = "radio";
+  input.type = "checkbox";
   input.name = "category";
   input.value = category;
 
@@ -44,6 +26,7 @@ sortedCategories.forEach(category => {
 
   categoryRow.appendChild(th);
 });
+
 
 const eventsContainer = document.querySelector('#events-container');
 
@@ -71,28 +54,29 @@ for (const event of data.events) {
   eventsContainer.appendChild(eventCard);
 }
 
-const categoryCheckboxes = document.querySelectorAll('input[type="radio"][name="category"]');
+const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
 
 categoryCheckboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
-    const selectedCategory = document.querySelector('input[type="radio"][name="category"]:checked').value;
+    const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
     const searchTerm = searchInput.value;
-    filterAndShowCards(selectedCategory, searchTerm);
+    filterAndShowCards(selectedCategories, searchTerm);
   });
 });
 
 searchInput.addEventListener("input", () => {
-  const selectedCategory = document.querySelector('input[type="radio"][name="category"]:checked').value;
+  const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
   const searchTerm = searchInput.value;
-  filterAndShowCards(selectedCategory, searchTerm);
+  filterAndShowCards(selectedCategories, searchTerm);
 });
 
-function filterAndShowCards(category, searchTerm) {
+
+function filterAndShowCards(categories, searchTerm) {
   eventsContainer.innerHTML = '';
 
-  data.events.filter(event => event.category === category || category === "")
+  data.events.filter(event => categories.includes(event.category) || categories.length === 0)
     .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     event.description.toLowerCase().includes(searchTerm.toLowerCase()))
     .forEach(event => {
@@ -103,6 +87,9 @@ function filterAndShowCards(category, searchTerm) {
 
 function showAllCards() {
   eventsContainer.innerHTML = '';
+  categoryCheckboxes.forEach(checkbox => {
+    checkbox.checked = false;
+  });
 
   for (const event of data.events) {
     let eventCard = tarjetas(event);

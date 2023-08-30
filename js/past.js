@@ -7,31 +7,13 @@ data.events.forEach(event => {
 const sortedCategories = Array.from(categoriesSet).sort();
 const categoryRow = document.getElementById("categoryRow");
 
-const allOption = document.createElement("th");
-const allLabel = document.createElement("label");
-const allInput = document.createElement("input");
-const allSpan = document.createElement("span");
-
-allInput.type = "radio";
-allInput.name = "category";
-allInput.value = ""; 
-allInput.checked = true;
-
-allSpan.textContent = "Todas";
-
-allLabel.appendChild(allInput);
-allLabel.appendChild(allSpan);
-allOption.appendChild(allLabel);
-
-categoryRow.appendChild(allOption);
-
 sortedCategories.forEach(category => {
   const th = document.createElement("th");
   const label = document.createElement("label");
   const input = document.createElement("input");
   const span = document.createElement("span");
 
-  input.type = "radio";
+  input.type = "checkbox"; // Cambiar de "radio" a "checkbox"
   input.name = "category";
   input.value = category;
 
@@ -42,7 +24,7 @@ sortedCategories.forEach(category => {
   th.appendChild(label);
 
   categoryRow.appendChild(th);
-});
+})
 
 const currentDate = new Date("2023-01-01"); 
 const eventsContainer = document.querySelector('#events-container');
@@ -67,32 +49,32 @@ function tarjetas(event) {
     return cardCol;
 }
 
-for (const event of data.events) {
-  let eventDate = new Date(event.date);
-  if (eventDate <= currentDate) {
-    let eventCard = tarjetas(event);
-    eventsContainer.appendChild(eventCard);
-  }
+const pastEvents = data.events.filter(event => new Date(event.date) <= currentDate);
+
+for (const event of pastEvents) {
+  let eventCard = tarjetas(event);
+  eventsContainer.appendChild(eventCard);
 }
 
-const categoryCheckboxes = document.querySelectorAll('input[type="radio"][name="category"]');
+const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
+
 categoryCheckboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
-    const selectedCategory = checkbox.value;
+    const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
     const searchTerm = searchInput.value;
-    filterAndShowCards(selectedCategory, searchTerm);
+    filterAndShowCards(selectedCategories, searchTerm);
   });
 });
 
 searchInput.addEventListener("input", () => {
-  const selectedCategory = document.querySelector('input[type="radio"][name="category"]:checked').value;
+  const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
   const searchTerm = searchInput.value;
-  filterAndShowCards(selectedCategory, searchTerm);
+  filterAndShowCards(selectedCategories, searchTerm);
 });
 
-function filterAndShowCards(category, searchTerm) {
+function filterAndShowCards(categories, searchTerm) {
   eventsContainer.innerHTML = '';
-  data.events.filter(event => new Date(event.date) > currentDate && (event.category === category || category === ""))
+  pastEvents.filter(event => categories.includes(event.category) || categories.length === 0)
     .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase()))
     .forEach(event => {
@@ -103,11 +85,8 @@ function filterAndShowCards(category, searchTerm) {
 
 function showAllCards() {
   eventsContainer.innerHTML = '';
-  for (const event of data.events) {
-    let eventDate = new Date(event.date);
-    if (eventDate > currentDate) { 
-      let eventCard = tarjetas(event);
-      eventsContainer.appendChild(eventCard);
-    }
+  for (const event of pastEvents) {
+    let eventCard = tarjetas(event);
+    eventsContainer.appendChild(eventCard);
   }
 }
