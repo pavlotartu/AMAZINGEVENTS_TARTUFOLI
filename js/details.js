@@ -7,6 +7,7 @@ const sourceParam = urlParams.get('source');
 if (eventParam) {
     const event = JSON.parse(decodeURIComponent(eventParam));
     displayEventDetails(event, sourceParam); 
+} else {
     eventDetailsContainer.textContent = 'No se ha proporcionado información del evento.';
 }
 
