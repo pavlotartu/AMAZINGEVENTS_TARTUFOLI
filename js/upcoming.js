@@ -33,7 +33,7 @@ const searchInput = document.getElementById("search-input");
 function tarjetas(event) {
   let { image, name, description, price } = event;
   let cardCol = document.createElement('div');
-  cardCol.className = 'col-12 col-md-6 col-lg-3 mb-4';
+  cardCol.className = 'col-12 col-sm-6 col-md-4  col-lg-4 col-xl-3 mb-4';
 
   cardCol.innerHTML = `
   <div class="card h-100">
@@ -76,13 +76,22 @@ searchInput.addEventListener("input", () => {
 function filterAndShowCards(categories, searchTerm) {
   eventsContainer.innerHTML = '';
 
-  futureEvents
+  const filteredEvents = futureEvents
     .filter(event => categories.includes(event.category) || categories.length === 0)
-    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    .forEach(event => {
+    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const noResultsMessage = document.getElementById('no-results-message');
+
+  if (filteredEvents.length === 0) {
+    noResultsMessage.style.display = 'block';
+  } else {
+    noResultsMessage.style.display = 'none';
+
+    filteredEvents.forEach(event => {
       let eventCard = tarjetas(event);
       eventsContainer.appendChild(eventCard);
     });
+  }
 }
 
 function showAllCards() {
