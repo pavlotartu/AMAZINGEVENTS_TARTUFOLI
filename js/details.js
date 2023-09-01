@@ -2,20 +2,11 @@ const eventDetailsContainer = document.getElementById('eventDetailsContainer');
 
 const urlParams = new URLSearchParams(window.location.search);
 const eventParam = urlParams.get('event');
-<<<<<<< HEAD
 const sourceParam = urlParams.get('source'); 
 
 if (eventParam) {
     const event = JSON.parse(decodeURIComponent(eventParam));
     displayEventDetails(event, sourceParam); 
-=======
-const sourceParam = urlParams.get('source'); // Agregar esta línea para obtener el valor de 'source'
-
-if (eventParam) {
-    const event = JSON.parse(decodeURIComponent(eventParam));
-    displayEventDetails(event, sourceParam); // Pasar 'sourceParam' como argumento
-} else {
->>>>>>> 94b9cd2 (ver02)
     eventDetailsContainer.textContent = 'No se ha proporcionado información del evento.';
 }
 
