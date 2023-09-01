@@ -13,7 +13,7 @@ sortedCategories.forEach(category => {
   const input = document.createElement("input");
   const span = document.createElement("span");
 
-  input.type = "checkbox"; // Cambiar de "radio" a "checkbox"
+  input.type = "checkbox";
   input.name = "category";
   input.value = category;
 
