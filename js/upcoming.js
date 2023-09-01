@@ -26,7 +26,7 @@ sortedCategories.forEach(category => {
   categoryRow.appendChild(th);
 });
 
-const currentDate = new Date("2023-01-01"); 
+const currentDate = new Date("2023-01-01");
 const eventsContainer = document.querySelector('#events-container');
 const searchInput = document.getElementById("search-input");
 
@@ -34,7 +34,7 @@ function tarjetas(event) {
   let { image, name, description, price } = event;
   let cardCol = document.createElement('div');
   cardCol.className = 'col-12 col-md-6 col-lg-3 mb-4';
-  
+
   cardCol.innerHTML = `
   <div class="card h-100">
   <img src="${image}" class="card-img-top" alt="${image}">
@@ -43,7 +43,7 @@ function tarjetas(event) {
     <p class="card-text">${description}</p>
     <div class="d-flex justify-content-between align-items-end">
       <p class="card-text">Precio: ${"$" + price}</p>
-      <a class="btn btn-primary btn-sm mt-2">Ver detalles</a>
+      <a href="details.html?event=${encodeURIComponent(JSON.stringify(event))}&source=upcoming" class="btn btn-primary btn-sm mt-2">Ver detalles</a>
     </div>
   </div>
 </div> `;
@@ -55,7 +55,7 @@ const futureEvents = data.events.filter(event => new Date(event.date) > currentD
 for (const event of futureEvents) {
   let eventCard = tarjetas(event);
   eventsContainer.appendChild(eventCard);
-} 
+}
 
 const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
 
@@ -75,7 +75,7 @@ searchInput.addEventListener("input", () => {
 
 function filterAndShowCards(categories, searchTerm) {
   eventsContainer.innerHTML = '';
-  
+
   futureEvents
     .filter(event => categories.includes(event.category) || categories.length === 0)
     .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()))

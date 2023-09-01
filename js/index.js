@@ -40,7 +40,7 @@ function tarjetas(event) {
         <p class="card-text">${description}</p>
         <div class="d-flex justify-content-between align-items-end">
           <p class="card-text">Precio: ${"$" + price}</p>
-          <a class="btn btn-primary btn-sm mt-2">Ver detalles</a>
+          <a class="btn btn-primary btn-sm mt-2" href="details.html?event=${encodeURIComponent(JSON.stringify(event))}">Ver detalles</a>
         </div>
       </div>
     </div>`;
