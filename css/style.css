@@ -70,6 +70,10 @@ fieldset span {
     object-fit: cover;
 }
 
+.row {
+    padding: 0vw 0vw 0vw 1vw;
+}
+
 #events-container {
     min-height: 27vh;
 }
