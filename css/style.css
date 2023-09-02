@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-main {
-    margin-bottom: 17.5vh; 
-    padding: 0vw 1vw 0vw 0vw;
-} 
-
 main .container {
     margin-bottom: 2vw;
 }
@@ -75,8 +70,8 @@ fieldset span {
     object-fit: cover;
 }
 
-.row {
-    padding: 0vw 0vw 0vw 1vw;
+#events-container {
+    min-height: 27vh;
 }
 
 .card-body p {
@@ -98,19 +93,3 @@ fieldset span {
     height: 250px;
     object-fit: cover;
 }
-
-#events-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 1vw;
-    min-height: 16vw;
-}
-
-footer {
-    display: flex;
-    flex-wrap: wrap;
-    bottom: 0;
-    left: 0;
-    right: 0;
-} 
-
