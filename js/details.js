@@ -36,9 +36,7 @@ function displayEventDetails(event, source) {
 
     if (assistance !== undefined) {
         detailsHTML += `<p class="card-text"><strong>Asistencia:</strong> ${assistance}</p>`;
-    }
-
-    if (estimate !== undefined) {
+    } else if (estimate !== undefined) {
         detailsHTML += `<p class="card-text"><strong>Estimado:</strong> ${estimate}</p>`;
     }
 
