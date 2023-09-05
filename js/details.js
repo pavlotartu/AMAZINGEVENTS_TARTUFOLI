@@ -6,7 +6,8 @@ const sourceParam = urlParams.get('source');
 
 if (eventParam) {
     const event = JSON.parse(decodeURIComponent(eventParam));
-    displayEventDetails(event, sourceParam);
+    const source = sourceParam || 'default';
+    displayEventDetails(event, source);
 } else {
     eventDetailsContainer.textContent = 'No se ha proporcionado información del evento.';
 }
@@ -58,10 +59,10 @@ function displayEventDetails(event, source) {
 
 function getBackLink(source) {
     if (source === 'past') {
-        return './past-events.html';
+        return '../past-events.html';
     } else if (source === 'upcoming') {
-        return './upcoming_events.html';
+        return '../upcoming_events.html';
     } else {
-        return './index.html';
+        return '../index.html';
     }
 }

@@ -27,32 +27,12 @@ sortedCategories.forEach(category => {
 })
 
 const currentDate = new Date("2023-01-01");
-const eventsContainer = document.querySelector('#events-container');
 const searchInput = document.getElementById("search-input");
-
-function tarjetas(event) {
-  let { image, name, description, price } = event;
-  let cardCol = document.createElement('div');
-  cardCol.className = 'col-12 col-sm-6 col-md-4  col-lg-4 col-xl-3 mb-4';
-  cardCol.innerHTML = `
-  <div class="card h-100">
-  <img src="${image}" class="card-img-top" alt="${image}">
-  <div class="card-body d-flex flex-column">
-    <h5 class="card-title">${name}</h5>
-    <p class="card-text">${description}</p>
-    <div class="d-flex justify-content-between align-items-end">
-      <p class="card-text">Precio: ${"$" + price}</p>
-      <a href="details.html?event=${encodeURIComponent(JSON.stringify(event))}&source=past" class="btn btn-primary btn-sm mt-2">Ver detalles</a>
-    </div>
-  </div>
-</div> `;
-  return cardCol;
-}
 
 const pastEvents = data.events.filter(event => new Date(event.date) <= currentDate);
 
 for (const event of pastEvents) {
-  let eventCard = tarjetas(event);
+  let eventCard = tarjetas(event, 'past');
   eventsContainer.appendChild(eventCard);
 }
 
@@ -86,7 +66,7 @@ function filterAndShowCards(categories, searchTerm) {
     noResultsMessage.style.display = 'none';
 
     filteredEvents.forEach(event => {
-      let eventCard = tarjetas(event);
+      let eventCard = tarjetas(event, 'past');
       eventsContainer.appendChild(eventCard);
     });
   }
@@ -95,7 +75,7 @@ function filterAndShowCards(categories, searchTerm) {
 function showAllCards() {
   eventsContainer.innerHTML = '';
   for (const event of pastEvents) {
-    let eventCard = tarjetas(event);
+    let eventCard = tarjetas(event, 'past');
     eventsContainer.appendChild(eventCard);
   }
 }
