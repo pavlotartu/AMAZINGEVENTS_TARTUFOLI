@@ -2,19 +2,19 @@ async function fetchDataFromAPI() {
   try {
     const response = await fetch('https://mindhub-xj03.onrender.com/api/amazing');
     const dataFromAPI = await response.json();
-
-    return dataFromAPI.events;
+    return { currentDate: new Date(dataFromAPI.currentDate), events: dataFromAPI.events };
   } catch (error) {
     console.error('Error al obtener los datos:', error);
-    return [];
+    return { currentDate: new Date(), events: [] };
   }
 }
 
 async function initialize() {
-  const data = await fetchDataFromAPI();
+  const { currentDate, events } = await fetchDataFromAPI();
+
   const categoriesSet = new Set();
 
-  data.forEach(event => {
+  events.forEach(event => {
     categoriesSet.add(event.category);
   });
 
@@ -48,17 +48,17 @@ async function initialize() {
     checkbox.addEventListener('change', () => {
       const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
       const searchTerm = searchInput.value;
-      filterAndShowCards(data, selectedCategories, searchTerm);
+      filterAndShowCards(events, currentDate, selectedCategories, searchTerm);
     });
   });
 
   searchInput.addEventListener("input", () => {
     const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
     const searchTerm = searchInput.value;
-    filterAndShowCards(data, selectedCategories, searchTerm);
+    filterAndShowCards(events, currentDate, selectedCategories, searchTerm);
   });
 
-  showAllCards(data);
+  showAllCards(events, currentDate);
 }
 
 function filterAndShowCards(data, selectedCategories, searchTerm) {
@@ -85,20 +85,43 @@ function filterAndShowCards(data, selectedCategories, searchTerm) {
   }
 }
 
-function showAllCards(data) {
+function filterAndShowCards(events, currentDate, selectedCategories, searchTerm) {
+  eventsContainer.innerHTML = '';
+
+  const pastEvents = events.filter(event => new Date(event.date) <= currentDate);
+
+  const filteredEvents = pastEvents
+    .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
+    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  if (filteredEvents.length === 0) {
+    const noResultsMessage = document.getElementById('no-results-message');
+    noResultsMessage.style.display = 'block';
+  } else {
+    const noResultsMessage = document.getElementById('no-results-message');
+    noResultsMessage.style.display = 'none';
+
+    filteredEvents.forEach(event => {
+      let eventCard = tarjetas(event);
+      eventsContainer.appendChild(eventCard);
+    });
+  }
+}
+
+function showAllCards(events, currentDate) {
   eventsContainer.innerHTML = '';
   const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
   categoryCheckboxes.forEach(checkbox => {
     checkbox.checked = false;
   });
 
-  const currentDate = new Date("2023-03-10");
-  const pastEvents = data.filter(event => new Date(event.date) <= currentDate);
+  const pastEvents = events.filter(event => new Date(event.date) <= currentDate);
 
   for (const event of pastEvents) {
     let eventCard = tarjetas(event);
     eventsContainer.appendChild(eventCard);
   }
 }
+
 
 initialize();

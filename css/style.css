@@ -4,6 +4,16 @@
     box-sizing: border-box;
 }
 
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    min-height: 73vh;
+}
+
 main .container {
     margin-bottom: 2vw;
 }
@@ -72,10 +82,6 @@ fieldset span {
 
 .row {
     padding: 0vw 0vw 0vw 1vw;
-}
-
-#events-container {
-    min-height: 27vh;
 }
 
 .card-body p {

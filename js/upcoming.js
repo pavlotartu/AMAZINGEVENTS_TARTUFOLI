@@ -2,19 +2,19 @@ async function fetchDataFromAPI() {
   try {
     const response = await fetch('https://mindhub-xj03.onrender.com/api/amazing');
     const dataFromAPI = await response.json();
-
-    return dataFromAPI.events;
+    return { currentDate: new Date(dataFromAPI.currentDate), events: dataFromAPI.events };
   } catch (error) {
     console.error('Error al obtener los datos:', error);
-    return [];
+    return { currentDate: new Date(), events: [] };
   }
 }
 
 async function initialize() {
-  const data = await fetchDataFromAPI();
+  const { currentDate, events } = await fetchDataFromAPI();
+
   const categoriesSet = new Set();
 
-  data.forEach(event => {
+  events.forEach(event => {
     categoriesSet.add(event.category);
   });
 
@@ -44,8 +44,7 @@ async function initialize() {
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("search-input");
 
-  const currentDate = new Date("2023-03-10");
-  const futureEvents = data.filter(event => new Date(event.date) >= currentDate);
+  const futureEvents = events.filter(event => new Date(event.date) >= currentDate);
 
   categoryCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
