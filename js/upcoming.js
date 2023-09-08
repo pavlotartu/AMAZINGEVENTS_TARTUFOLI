@@ -1,100 +1,95 @@
-async function fetchDataFromAPI() {
-  try {
-    const response = await fetch('https://mindhub-xj03.onrender.com/api/amazing');
-    const dataFromAPI = await response.json();
-    return { currentDate: new Date(dataFromAPI.currentDate), events: dataFromAPI.events };
-  } catch (error) {
-    console.error('Error al obtener los datos:', error);
-    return { currentDate: new Date(), events: [] };
-  }
-}
+function handleUpcomingData(events, currentDate) {
+  async function initialize(currentDate, events) {
+    const categoriesSet = new Set();
 
-async function initialize() {
-  const { currentDate, events } = await fetchDataFromAPI();
+    events.forEach(event => {
+      categoriesSet.add(event.category);
+    });
 
-  const categoriesSet = new Set();
+    const sortedCategories = Array.from(categoriesSet).sort();
+    const categoryRow = document.getElementById("categoryRow");
 
-  events.forEach(event => {
-    categoriesSet.add(event.category);
-  });
+    sortedCategories.forEach(category => {
+      const th = document.createElement("th");
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      const span = document.createElement("span");
 
-  const sortedCategories = Array.from(categoriesSet).sort();
-  const categoryRow = document.getElementById("categoryRow");
+      input.type = "checkbox";
+      input.name = "category";
+      input.value = category;
 
-  sortedCategories.forEach(category => {
-    const th = document.createElement("th");
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    const span = document.createElement("span");
+      span.textContent = category;
 
-    input.type = "checkbox";
-    input.name = "category";
-    input.value = category;
+      label.appendChild(input);
+      label.appendChild(span);
+      th.appendChild(label);
 
-    span.textContent = category;
+      categoryRow.appendChild(th);
+    });
 
-    label.appendChild(input);
-    label.appendChild(span);
-    th.appendChild(label);
+    const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
+    const searchForm = document.getElementById("search-form");
+    const searchInput = document.getElementById("search-input");
 
-    categoryRow.appendChild(th);
-  });
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
+        const searchTerm = searchInput.value;
+        filterAndShowCards(events, currentDate, selectedCategories, searchTerm);
+      });
+    });
 
-  const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
-  const searchForm = document.getElementById("search-form");
-  const searchInput = document.getElementById("search-input");
-
-  const futureEvents = events.filter(event => new Date(event.date) >= currentDate);
-
-  categoryCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+    searchInput.addEventListener("input", () => {
       const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
       const searchTerm = searchInput.value;
-      filterAndShowCards(futureEvents, selectedCategories, searchTerm);
+      filterAndShowCards(events, currentDate, selectedCategories, searchTerm);
     });
-  });
 
-  searchInput.addEventListener("input", () => {
-    const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
-    const searchTerm = searchInput.value;
-    filterAndShowCards(futureEvents, selectedCategories, searchTerm);
-  });
+    showAllCards(events, currentDate);
+  }
 
-  showAllCards(futureEvents);
-}
+  function filterAndShowCards(events, currentDate, selectedCategories, searchTerm) {
+    eventsContainer.innerHTML = '';
 
-function filterAndShowCards(data, selectedCategories, searchTerm) {
-  eventsContainer.innerHTML = '';
+    const upcomingEvents = events.filter(event => new Date(event.date) >= currentDate);
 
-  const filteredEvents = data
-    .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
-    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredEvents = upcomingEvents
+      .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
+      .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  const noResultsMessage = document.getElementById('no-results-message');
+    if (filteredEvents.length === 0) {
+      const noResultsMessage = document.getElementById('no-results-message');
+      noResultsMessage.style.display = 'block';
+    } else {
+      const noResultsMessage = document.getElementById('no-results-message');
+      noResultsMessage.style.display = 'none';
 
-  if (filteredEvents.length === 0) {
-    noResultsMessage.style.display = 'block';
-  } else {
-    noResultsMessage.style.display = 'none';
+      filteredEvents.forEach(event => {
+        let eventCard = tarjetas(event);
+        eventsContainer.appendChild(eventCard);
+      });
+    }
+  }
 
-    filteredEvents.forEach(event => {
+  function showAllCards(events, currentDate) {
+    eventsContainer.innerHTML = '';
+    const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    const upcomingEvents = events.filter(event => new Date(event.date) >= currentDate);
+
+    for (const event of upcomingEvents) {
       let eventCard = tarjetas(event);
       eventsContainer.appendChild(eventCard);
-    });
+    }
   }
+
+  initialize(currentDate, events);
 }
 
-function showAllCards(data) {
-  eventsContainer.innerHTML = '';
-  const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
-  categoryCheckboxes.forEach(checkbox => {
-    checkbox.checked = false;
-  });
-
-  for (const event of data) {
-    let eventCard = tarjetas(event);
-    eventsContainer.appendChild(eventCard);
-  }
-}
-
-initialize();
+fetchDataFromAPI((events, currentDate) => {
+  handleUpcomingData(events, currentDate);
+});

@@ -33,18 +33,20 @@ function tarjetas(event) {
   return cardCol;
 }
 
-async function fetchDataFromAPI() {
+async function fetchDataFromAPI(callback) {
   try {
     const response = await fetch('https://mindhub-xj03.onrender.com/api/amazing');
     const dataFromAPI = await response.json();
-
-    dataFromAPI.events.forEach(event => {
-      let eventCard = tarjetas(event);
-      eventsContainer.appendChild(eventCard);
-    });
+    
+    const currentDate = new Date(dataFromAPI.currentDate);
+    
+    callback(dataFromAPI.events, currentDate);
   } catch (error) {
     console.error('Error al obtener los datos:', error);
+    callback([], new Date());
   }
 }
 
-fetchDataFromAPI();
+fetchDataFromAPI((events, currentDate) => {
+
+});

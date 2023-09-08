@@ -1,98 +1,89 @@
-async function fetchDataFromAPI() {
-  try {
-    const response = await fetch('https://mindhub-xj03.onrender.com/api/amazing');
-    const dataFromAPI = await response.json();
+function handleIndexData(data) {
+  async function initialize() {
+    const categoriesSet = new Set();
 
-    return dataFromAPI.events;
-  } catch (error) {
-    console.error('Error al obtener los datos:', error);
-    return [];
-  }
-}
+    data.forEach(event => {
+      categoriesSet.add(event.category);
+    });
 
-async function initialize() {
-  const data = await fetchDataFromAPI();
-  const categoriesSet = new Set();
+    const sortedCategories = Array.from(categoriesSet).sort();
+    const categoryRow = document.getElementById("categoryRow");
 
-  data.forEach(event => {
-    categoriesSet.add(event.category);
-  });
+    sortedCategories.forEach(category => {
+      const th = document.createElement("th");
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      const span = document.createElement("span");
 
-  const sortedCategories = Array.from(categoriesSet).sort();
-  const categoryRow = document.getElementById("categoryRow");
+      input.type = "checkbox";
+      input.name = "category";
+      input.value = category;
 
-  sortedCategories.forEach(category => {
-    const th = document.createElement("th");
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    const span = document.createElement("span");
+      span.textContent = category;
 
-    input.type = "checkbox";
-    input.name = "category";
-    input.value = category;
+      label.appendChild(input);
+      label.appendChild(span);
+      th.appendChild(label);
 
-    span.textContent = category;
+      categoryRow.appendChild(th);
+    });
 
-    label.appendChild(input);
-    label.appendChild(span);
-    th.appendChild(label);
+    const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
+    const searchForm = document.getElementById("search-form");
+    const searchInput = document.getElementById("search-input");
 
-    categoryRow.appendChild(th);
-  });
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
+        const searchTerm = searchInput.value;
+        filterAndShowCards(data, selectedCategories, searchTerm);
+      });
+    });
 
-  const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
-  const searchForm = document.getElementById("search-form");
-  const searchInput = document.getElementById("search-input");
-
-  categoryCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+    searchInput.addEventListener("input", () => {
       const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
       const searchTerm = searchInput.value;
       filterAndShowCards(data, selectedCategories, searchTerm);
     });
-  });
 
-  searchInput.addEventListener("input", () => {
-    const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"][name="category"]:checked')).map(checkbox => checkbox.value);
-    const searchTerm = searchInput.value;
-    filterAndShowCards(data, selectedCategories, searchTerm);
-  });
+    showAllCards(data);
+  }
 
-  showAllCards(data);
-}
+  function filterAndShowCards(data, selectedCategories, searchTerm) {
+    eventsContainer.innerHTML = '';
 
-function filterAndShowCards(data, selectedCategories, searchTerm) {
-  eventsContainer.innerHTML = '';
+    const filteredEvents = data
+      .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
+      .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
-  const filteredEvents = data
-    .filter(event => selectedCategories.includes(event.category) || selectedCategories.length === 0)
-    .filter(event => event.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    if (filteredEvents.length === 0) {
+      const noResultsMessage = document.getElementById('no-results-message');
+      noResultsMessage.style.display = 'block';
+    } else {
+      const noResultsMessage = document.getElementById('no-results-message');
+      noResultsMessage.style.display = 'none';
 
-  if (filteredEvents.length === 0) {
-    const noResultsMessage = document.getElementById('no-results-message');
-    noResultsMessage.style.display = 'block';
-  } else {
-    const noResultsMessage = document.getElementById('no-results-message');
-    noResultsMessage.style.display = 'none';
+      filteredEvents.forEach(event => {
+        let eventCard = tarjetas(event);
+        eventsContainer.appendChild(eventCard);
+      });
+    }
+  }
 
-    filteredEvents.forEach(event => {
+  function showAllCards(data) {
+    eventsContainer.innerHTML = '';
+    const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+    data.forEach(event => {
       let eventCard = tarjetas(event);
       eventsContainer.appendChild(eventCard);
     });
   }
+
+  initialize(); 
 }
 
-function showAllCards(data) {
-  eventsContainer.innerHTML = '';
-  const categoryCheckboxes = document.querySelectorAll('input[type="checkbox"][name="category"]');
-  categoryCheckboxes.forEach(checkbox => {
-    checkbox.checked = false;
-  });
-
-  data.forEach(event => {
-    let eventCard = tarjetas(event);
-    eventsContainer.appendChild(eventCard);
-  });
-}
-
-initialize();
+fetchDataFromAPI(handleIndexData);
