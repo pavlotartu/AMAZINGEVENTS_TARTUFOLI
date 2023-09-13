@@ -50,13 +50,13 @@ if (upcomingEventsTbody) {
             const currentDate = new Date("2023-03-10");
             const upcomingEvents = data.events.filter(event => new Date(event.date) > currentDate);
 
-            const categoryTotals = {}; // Cambiado a categoryTotals
+            const categoryTotals = {};
 
             upcomingEvents.forEach(event => {
                 const categoryName = event.category;
                 const categoryRevenue = event.estimate * event.price;
 
-                if (!categoryTotals[categoryName]) { // Cambiado a categoryTotals
+                if (!categoryTotals[categoryName]) { 
                     categoryTotals[categoryName] = {
                         totalEstimate: 0,
                         totalCapacity: 0,
@@ -64,14 +64,14 @@ if (upcomingEventsTbody) {
                     };
                 }
 
-                categoryTotals[categoryName].totalEstimate += event.estimate; // Sumar estimado
-                categoryTotals[categoryName].totalCapacity += event.capacity; // Sumar capacidad
-                categoryTotals[categoryName].totalRevenue += categoryRevenue; // Sumar ingresos
+                categoryTotals[categoryName].totalEstimate += event.estimate; 
+                categoryTotals[categoryName].totalCapacity += event.capacity;
+                categoryTotals[categoryName].totalRevenue += categoryRevenue; 
             });
 
             upcomingEventsTbody.innerHTML = '';
 
-            // Calcular y mostrar los ingresos y el porcentaje de asistencia para cada categoría
+
             for (const categoryName in categoryTotals) {
                 const totalEstimate = categoryTotals[categoryName].totalEstimate;
                 const totalCapacity = categoryTotals[categoryName].totalCapacity;
