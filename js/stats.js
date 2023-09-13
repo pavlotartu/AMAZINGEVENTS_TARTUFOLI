@@ -1,4 +1,3 @@
-//tabla01
 
 let tbody = document.querySelector("#statsTable tbody");
 
@@ -37,8 +36,6 @@ if (tbody) {
     console.error("El tbody de la tabla no se encontró en el documento.");
 }
 
-//tabla02
-
 let upcomingEventsTbody = document.querySelector("#upcomingEventsTable tbody");
 
 if (upcomingEventsTbody) {
@@ -56,7 +53,7 @@ if (upcomingEventsTbody) {
                 const categoryName = event.category;
                 const categoryRevenue = event.estimate * event.price;
 
-                if (!categoryTotals[categoryName]) { 
+                if (!categoryTotals[categoryName]) {
                     categoryTotals[categoryName] = {
                         totalEstimate: 0,
                         totalCapacity: 0,
@@ -64,9 +61,9 @@ if (upcomingEventsTbody) {
                     };
                 }
 
-                categoryTotals[categoryName].totalEstimate += event.estimate; 
+                categoryTotals[categoryName].totalEstimate += event.estimate;
                 categoryTotals[categoryName].totalCapacity += event.capacity;
-                categoryTotals[categoryName].totalRevenue += categoryRevenue; 
+                categoryTotals[categoryName].totalRevenue += categoryRevenue;
             });
 
             upcomingEventsTbody.innerHTML = '';
@@ -97,9 +94,6 @@ if (upcomingEventsTbody) {
 } else {
     console.error("El tbody de la segunda tabla no se encontró en el documento.");
 }
-
-
-//tabla03
 
 function calcularEstadisticasEventosPasados() {
     let pastEventsTbody = document.querySelector("#pastEventsTable tbody");
