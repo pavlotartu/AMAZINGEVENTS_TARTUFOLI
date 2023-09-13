@@ -50,33 +50,41 @@ if (upcomingEventsTbody) {
             const currentDate = new Date("2023-03-10");
             const upcomingEvents = data.events.filter(event => new Date(event.date) > currentDate);
 
-            const categoryRevenues = {};
+            const categoryTotals = {}; // Cambiado a categoryTotals
 
             upcomingEvents.forEach(event => {
                 const categoryName = event.category;
                 const categoryRevenue = event.estimate * event.price;
 
-                if (!categoryRevenues[categoryName]) {
-                    categoryRevenues[categoryName] = 0;
+                if (!categoryTotals[categoryName]) { // Cambiado a categoryTotals
+                    categoryTotals[categoryName] = {
+                        totalEstimate: 0,
+                        totalCapacity: 0,
+                        totalRevenue: 0
+                    };
                 }
 
-                categoryRevenues[categoryName] += categoryRevenue;
+                categoryTotals[categoryName].totalEstimate += event.estimate; // Sumar estimado
+                categoryTotals[categoryName].totalCapacity += event.capacity; // Sumar capacidad
+                categoryTotals[categoryName].totalRevenue += categoryRevenue; // Sumar ingresos
             });
 
-            const totalRevenue = Object.values(categoryRevenues).reduce((total, revenue) => total + revenue, 0);
             upcomingEventsTbody.innerHTML = '';
 
-            for (const categoryName in categoryRevenues) {
-                const categoryRevenue = categoryRevenues[categoryName];
-                const percentageRevenue = (categoryRevenue / totalRevenue) * 100;
+            // Calcular y mostrar los ingresos y el porcentaje de asistencia para cada categoría
+            for (const categoryName in categoryTotals) {
+                const totalEstimate = categoryTotals[categoryName].totalEstimate;
+                const totalCapacity = categoryTotals[categoryName].totalCapacity;
+                const totalRevenue = categoryTotals[categoryName].totalRevenue;
+                const percentageAttendance = (totalEstimate * 100) / totalCapacity;
 
                 let newRow = upcomingEventsTbody.insertRow();
                 let cell1 = newRow.insertCell(0);
                 let cell2 = newRow.insertCell(1);
                 let cell3 = newRow.insertCell(2);
                 cell1.textContent = categoryName;
-                cell2.textContent = "$" + categoryRevenue.toFixed(2); 
-                cell3.textContent = percentageRevenue.toFixed(2) + "%"; 
+                cell2.textContent = "$" + totalRevenue.toFixed(2);
+                cell3.textContent = percentageAttendance.toFixed(2) + "%";
 
                 cell1.classList.add("text-center", "text-xs");
                 cell2.classList.add("text-center", "text-xs");
@@ -89,6 +97,7 @@ if (upcomingEventsTbody) {
 } else {
     console.error("El tbody de la segunda tabla no se encontró en el documento.");
 }
+
 
 //tabla03
 
@@ -104,34 +113,41 @@ function calcularEstadisticasEventosPasados() {
                 const currentDate = new Date("2023-03-10");
                 const pastEvents = data.events.filter(event => new Date(event.date) < currentDate);
 
-                const categoryAssistance = {};
+                const categoryTotals = {};
 
                 pastEvents.forEach(event => {
                     const categoryName = event.category;
-                    const categoryEventAssistance = event.assistance;
+                    const categoryAssistance = event.assistance;
+                    const categoryRevenue = categoryAssistance * event.price;
 
-                    if (!categoryAssistance[categoryName]) {
-                        categoryAssistance[categoryName] = 0;
+                    if (!categoryTotals[categoryName]) {
+                        categoryTotals[categoryName] = {
+                            totalAssistance: 0,
+                            totalRevenue: 0,
+                            totalCapacity: 0
+                        };
                     }
 
-                    categoryAssistance[categoryName] += categoryEventAssistance;
+                    categoryTotals[categoryName].totalAssistance += categoryAssistance;
+                    categoryTotals[categoryName].totalRevenue += categoryRevenue;
+                    categoryTotals[categoryName].totalCapacity += event.capacity;
                 });
-
-                const totalAssistance = Object.values(categoryAssistance).reduce((total, assistance) => total + assistance, 0);
 
                 pastEventsTbody.innerHTML = '';
 
-                for (const categoryName in categoryAssistance) {
-                    const categoryEventAssistance = categoryAssistance[categoryName];
-                    const percentageAssistance = (categoryEventAssistance / totalAssistance) * 100;
+                for (const categoryName in categoryTotals) {
+                    const totalAssistance = categoryTotals[categoryName].totalAssistance;
+                    const totalRevenue = categoryTotals[categoryName].totalRevenue;
+                    const totalCapacity = categoryTotals[categoryName].totalCapacity;
+                    const percentageAssistance = (totalAssistance * 100) / totalCapacity;
 
                     let newRow = pastEventsTbody.insertRow();
                     let cell1 = newRow.insertCell(0);
                     let cell2 = newRow.insertCell(1);
                     let cell3 = newRow.insertCell(2);
                     cell1.textContent = categoryName;
-                    cell2.textContent = "$" + categoryEventAssistance.toFixed(2);
-                    cell3.textContent = percentageAssistance.toFixed(2) + "%"; 
+                    cell2.textContent = "$" + totalRevenue.toFixed(2);
+                    cell3.textContent = percentageAssistance.toFixed(2) + "%";
 
                     cell1.classList.add("text-center", "text-xs");
                     cell2.classList.add("text-center", "text-xs");
